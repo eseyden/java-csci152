@@ -1,3 +1,9 @@
+/**
+ *  --------------------------------------------
+ *	Program 1.1.2 Using a command-line argument
+ *	(UseArgument.java)
+ *  --------------------------------------------
+ */
 public class UseArgument
 {
 	public static void main(String[] args)

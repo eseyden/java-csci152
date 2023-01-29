@@ -1,3 +1,9 @@
+/**
+ * -----------------------------------------
+ * Program 1.1.1 Hello, World
+ * (HelloWorld.java)
+ * --------------------------------------------
+ */
 public class HelloWorld
 {
 	public static void main(String[] args)
