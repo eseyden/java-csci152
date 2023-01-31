@@ -1,7 +1,9 @@
+package BookWork;
+
 /**
  *  --------------------------------------------
  *	Program 1.1.2 Using a command-line argument
- *	(UseArgument.java)
+ *	(BookWork.UseArgument.java)
  *  --------------------------------------------
  */
 public class UseArgument

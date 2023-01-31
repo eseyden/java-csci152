@@ -1,7 +1,9 @@
+package BookWork;
+
 /**
  * ---------------------------------------------------
  * Program 1.2.2 Integer multiplication and division
- * (IntOps.java)
+ * (BookWork.IntOps.java)
  * ---------------------------------------------------
  */
 

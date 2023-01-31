@@ -1,7 +1,9 @@
+package BookWork;
+
 /**
  * ------------------------------------------
  * Program 1.2.1 String concatenation
- * (Ruler.java)
+ * (BookWork.Ruler.java)
  * ------------------------------------------
  */
 public class Ruler

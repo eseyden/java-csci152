@@ -1,7 +1,9 @@
+package BookWork;
+
 /**
  * -----------------------------------------
  * Program 1.1.1 Hello, World
- * (HelloWorld.java)
+ * (BookWork.HelloWorld.java)
  * --------------------------------------------
  */
 public class HelloWorld
