@@ -1,5 +1,6 @@
-package BookWork;
+package csci_152.chapter1.section2;
 
+import com.ericseyden.csci_152.chapter1.section2.IntOps;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

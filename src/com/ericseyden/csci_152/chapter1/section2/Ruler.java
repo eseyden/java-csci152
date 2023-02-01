@@ -1,4 +1,4 @@
-package BookWork;
+package com.ericseyden.csci_152.chapter1.section2;
 
 /**
  * ------------------------------------------
