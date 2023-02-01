@@ -2,7 +2,7 @@
  * -------------------------------------------------------------------------------
  * CSCI 152, Homework #1
  * Problem 1
- * (CharacterOutput.class)
+ * (CharacterOutput.java)
  * -------------------------------------------------------------------------------
  * This program demonstrates the underlying integer values of character data types
  * -------------------------------------------------------------------------------

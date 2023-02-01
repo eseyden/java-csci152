@@ -2,7 +2,7 @@
  * -------------------------------------------------------------------------------
  * CSCI 152, Homework #1
  * Problem 3
- * (UnhelpfulCalculator2.class)
+ * (UnhelpfulCalculator2.java)
  * -------------------------------------------------------------------------------
  * This program finds the product of two characters
  * and elaborates on why their product is 3021
