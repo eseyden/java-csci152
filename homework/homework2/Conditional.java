@@ -6,6 +6,11 @@
  * -------------------------------------------------------------------------------
  * This program examines why a conditional structure
  * is best for a given application
+ *
+ * Q/A: I prefer not nested if possible
+ * If it is nested I pull the complexity of deeper nesting
+ * out into functions that can be tested independently.
+ *
  * -------------------------------------------------------------------------------
  * Eric Seyden
  * 2023-02-01
