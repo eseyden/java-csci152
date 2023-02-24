@@ -23,15 +23,13 @@ public class FileIO {
 
     public static Scanner openFile(String filename) throws FileNotFoundException{
         File FileHandle = new File(filename);
-        Scanner FileScanner;
         try {
-            FileScanner = new Scanner(FileHandle);
+            return new Scanner(FileHandle);
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
             System.exit(1);
             throw exception;
         }
-        return FileScanner;
     }
     public static void lecture(String[] args) {
         String filename = "my-name.txt"; // file name
