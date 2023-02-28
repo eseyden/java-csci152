@@ -1,0 +1,21 @@
+If I were writing "the hash library" that balanced memory requirements and time spent probing,
+I would first find a good reference to read about the problem.
+
+First is Stack Overflow: https://stackoverflow.com/questions/26349226/size-of-the-hash-table
+Then that leads to the Wikipedia article, Hash Table Collision Resolution.
+
+This has a great graph comparing CPU cache misses for hash tables using linear probing.
+https://en.wikipedia.org/wiki/Hash_table#/media/File:Hash_table_average_insertion_time.png
+
+According to this graph it looks like linear probing performance drops off at a load factor of 0.8
+Given this I would probably have capacity be a parameter for instancing this class
+and construct the array pair so with a given capacity it would have a load factor of 0.6 to start with.
+
+So I'd initialize the arrays with a size 1.6 times the request capacity.
+Then as items got added to the hash table it would resize itself back to a load factor of 0.6
+if it ever hit a load factor of 0.8, that is where load factor is calculated by the occupancy divided by the capacity.
+
+Of course a really fun way to tune the algorithm is to write some unit tests.
+I'd probably use this library https://github.com/DiUS/java-faker to generate random data to put in the hash table.
+
+Then collect performance metrics with a suite of unit tests and verify my assumptions before publishing the library.
