@@ -1,1 +1,13 @@
 https://dl.acm.org/doi/10.1145/800058.801107
+The Rubik's Cube has always given me a headache. That old paper makes me want to learn APL.
+
+The advantage of a), 6 2d arrays representing each face of the cube, is that I can easily understand the layout of the data.
+While performing cube transformations might be difficult extracting and displaying the state would be easier.
+
+With b) I'm not really sure what is going on but I'd bet this data structure optimizes Rubik's Cube moves.
+
+I'd probably go for an overkill and just use objects to represent each of the sub cubes instead of an array as they
+should be divided into corners, edges and centers so I can represent the physical cube in a data structure.
+
+While not optimal I really argue its far better to throw resources at understandability of the code rather than
+performance. Hence, why I really enjoy software engineering but never was quite cut out for rigorous computer science.
