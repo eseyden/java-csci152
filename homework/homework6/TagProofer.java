@@ -30,82 +30,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-/*  CLASS: Tag
- *
- *  A linked list element designed to hold an HTML tag,
- *  the line number it was found on in the file, and
- *  a reference to the next Tag.
- *
- */
-class Tag {
-
-    String type;
-    int    line_number;
-    Tag    Next;
-
-    public Tag (String type, int line_number) {
-        this.type = type;
-        this.line_number = line_number;
-        this.Next = null;
-    }
-
-}
-
-
-
-/*  CLASS: TagStack
- *
- *  A class for maintaining a stack of Tags
- *
- */
-class TagStack {
-
-    Tag Top;
-
-    /*  Method: IsEmpty
-     *
-     *  Returns 'true' if the stack is empty
-     *
-     */
-    public Boolean IsEmpty () {
-        return Top == null;
-    }
-
-    /*  Method: Pop
-     *
-     *  Removes the top Tag from the stack and returns it
-     *
-     */
-    public Tag Pop () {
-        if(IsEmpty()){ // Can't pop anything if we are empty
-            return null;
-        }
-        Tag out = Top; // Item to return
-        Top = out.Next; // Top is now the next item
-        out.Next = null; // Remove reference to next
-        return out;
-    }
-
-
-    /*  Method: Push
-     *
-     *  Takes the info. needed to make a new Tag, creates a Tag, and
-     *  pushes it onto the top of the stack.
-     *
-     */
-    public void Push (String type, int line_number) {
-        Tag newTag = new Tag(type, line_number);
-        newTag.Next = Top;
-        Top = newTag;
-    }
-
-
-}
-
-
-
-
-
 /* "CLASS": TagProofer
  *
  * The functional code for proofreading the tags in an HTML file
@@ -239,5 +163,79 @@ public class TagProofer {
 
 
 }
+
+
+/*  CLASS: Tag
+ *
+ *  A linked list element designed to hold an HTML tag,
+ *  the line number it was found on in the file, and
+ *  a reference to the next Tag.
+ *
+ */
+class Tag {
+
+    String type;
+    int    line_number;
+    Tag    Next;
+
+    public Tag (String type, int line_number) {
+        this.type = type;
+        this.line_number = line_number;
+        this.Next = null;
+    }
+
+}
+
+
+
+/*  CLASS: TagStack
+ *
+ *  A class for maintaining a stack of Tags
+ *
+ */
+class TagStack {
+
+    Tag Top;
+
+    /*  Method: IsEmpty
+     *
+     *  Returns 'true' if the stack is empty
+     *
+     */
+    public Boolean IsEmpty () {
+        return Top == null;
+    }
+
+    /*  Method: Pop
+     *
+     *  Removes the top Tag from the stack and returns it
+     *
+     */
+    public Tag Pop () {
+        if(IsEmpty()){ // Can't pop anything if we are empty
+            return null;
+        }
+        Tag out = Top; // Item to return
+        Top = out.Next; // Top is now the next item
+        out.Next = null; // Remove reference to next
+        return out;
+    }
+
+
+    /*  Method: Push
+     *
+     *  Takes the info. needed to make a new Tag, creates a Tag, and
+     *  pushes it onto the top of the stack.
+     *
+     */
+    public void Push (String type, int line_number) {
+        Tag newTag = new Tag(type, line_number);
+        newTag.Next = Top;
+        Top = newTag;
+    }
+
+
+}
+
 
 
