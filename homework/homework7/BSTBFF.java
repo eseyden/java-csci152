@@ -44,6 +44,7 @@ public class BSTBFF {
         while(myScanner.hasNext()) {
             myTree.Find(myScanner.nextInt()); // SEARCH TREE
         }
+        System.out.println(myTree.GetDepth());
     }
 
     /**
@@ -78,6 +79,23 @@ public class BSTBFF {
  */
 class Tree {
     Node Root; // STRUCTURE START
+
+    int GetDepth(Node N) {
+        int dL=0;
+        if (N.Left != null){
+            dL = GetDepth(N.Left);
+        }
+        int dR=0;
+        if(N.Right != null){
+            dR = GetDepth(N.Right);
+        }
+
+        return Math.max(dR,dL) + 1;
+    }
+    int GetDepth() {
+        if(Root == null) return 0;
+        return GetDepth(Root);
+    }
 
     /**
      * Insert
