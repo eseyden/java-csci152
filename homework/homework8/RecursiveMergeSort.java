@@ -27,6 +27,17 @@ public class RecursiveMergeSort {
             Output looks a little less steep than what wolfram alpha tells me the graph for N log2 N should be.
             Could be random just isn't random enough or something else. Seems like the time should be scaling up faster.
 
+            Sorting 80000 elements.
+            80000 elements: 27 milliseconds
+            Sorting 160000 elements.
+            160000 elements: 36 milliseconds
+            Sorting 320000 elements.
+            320000 elements: 50 milliseconds
+            Sorting 640000 elements.
+            640000 elements: 101 milliseconds
+            Sorting 1280000 elements.
+            1280000 elements: 181 milliseconds
+
             ------------------------------------------------------------------------------------------------------------
          */
         if(args.length == 0 ) {
