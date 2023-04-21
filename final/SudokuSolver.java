@@ -41,7 +41,7 @@ public class SudokuSolver {
                     Tries[row][col]++;
                     clearScreen();
                     System.out.println(getMaxValue(Tries));
-                    print(Puzzle);
+                    print(Tries);
                     for(int number=1; number<=9; number++){
                         if(isValidMove(row,col,number)) {
                             Puzzle[row][col] = number;
