@@ -1,57 +1,81 @@
 /**
- * Notes
- *
- * No 16-clue Sudoku
- * https://arxiv.org/abs/1201.0749
- *
- * Deductive solving
- * https://medium.com/@eneko/solving-sudoku-puzzles-programmatically-with-logic-and-without-brute-force-b4e8b837d796
- *
- *
+ * ------------------------
+ * CSCI 152, Final Project
+ * (SudokuSolver.java)
+ * ------------------------
+ * Eric Seyden
+ * 2023-05-08
+ * ------------------------
  */
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class SudokuSolver {
-    static Integer[][] Puzzle;
-    static int[][] Tries = new int[9][9];
-    public static Integer ConvertChar(char myChar) {
-        int myValue = Character.getNumericValue(myChar);
-        if(myValue == -1) return null;
-        return myValue;
-    }
+    static Integer[][] Puzzle; // Working Puzzle Matrix
+    static int[][] Tries = new int[9][9]; // Tallies backtracks
+
     public static void main(String[] args) {
-        Puzzle = ReadSudokuPuzzle("impossible_board.txt");
-        Solve();
-        if(CheckPuzzle(Puzzle)) {
-            System.out.println("SOLVERD");
+        if(args.length != 1) {
+            System.out.println("Please provide file name of Sudoku puzzle.");
+            System.exit(1);
         }
-        System.out.println(getMaxValue(Tries));
-        print(Tries);
-        print(Puzzle);
+        String filename = args[0];
+        // Parse Sudoku Puzzle Initial State
+        Puzzle = ReadSudokuPuzzle(filename);
+        // Try catch for impossible puzzles.
+        try {
+            Solve(); // Run main recursive function
+        } catch (ImpossiblePuzzleException e) {
+            System.out.println(e); //Output problem statement
+        }
+
+        print(Puzzle); // Output puzzle state
+        if(CheckPuzzle(Puzzle)) {
+            System.out.println("Solved");
+        } else {
+            System.out.println("Unsolvable by this algorithm.");
+        }
     }
 
+    /**
+     * Solve
+     * ----------------
+     * Loops through entire puzzle until solved
+     * Will throw an error if any cell has 100k+ tries
+     * @return Puzzle solving state
+     */
     public static boolean Solve() {
+        // Loop through all cells of puzzle
         for(int row=0; row<9; row++){
             for(int col=0; col<9; col++) {
+                // Check for blank cells
                 if(Puzzle[row][col] == null) {
-                    Tries[row][col]++;
-                    clearScreen();
-                    System.out.println(getMaxValue(Tries));
-                    print(Tries);
+                    Tries[row][col]++; // Increment try counter
+                    if(getMaxValue(Tries) > 100000) { // We tried too hard, this algo probably won't work.
+                        throw new ImpossiblePuzzleException("Impossible puzzle, over 100k backtracks.");
+                    }
+                    // Loop through possible cell values
                     for(int number=1; number<=9; number++){
+                        // Was that move OK?
                         if(isValidMove(row,col,number)) {
+                            // Place guess in puzzle matrix
                             Puzzle[row][col] = number;
+                            // Try to solve the next blank space.
                             if(Solve()) {
+                                //Bubble up the solution state out of recursion.
                                 return true;
                             } else {
+                                // That value didn't work
                                 Puzzle[row][col] = null;
                             }
                         }
                     }
+                    /*
+                     None of the numbers work as a solution
+                     This will trigger backtracking
+                     */
                     return false;
                 }
             }
@@ -59,18 +83,37 @@ public class SudokuSolver {
         return true;
     }
 
+    /**
+     * Is Valid Move
+     * ------------------------------
+     * We don't want to place invalid moves on the grid
+     * This function checks moves before they are placed.
+     * @param row Row we are placing a value at
+     * @param col Column we are placing a value at
+     * @param number Value we are placing
+     * @return Is it a valid move?
+     */
     public static boolean isValidMove(int row, int col, int number) {
-        Integer[][] myPuzzle = new Integer[9][9];
-        for(int c=0; c<9; c++){
+        Integer[][] myPuzzle = new Integer[9][9]; // Create a new puzzle state matrix
+        for(int c=0; c<9; c++){ // Copy the rows
             myPuzzle[c] = Puzzle[c].clone();
         }
+        // Place the value in the temp puzzle state
         myPuzzle[row][col] = number;
-        return CheckPuzzle(myPuzzle);
+        return CheckPuzzle(myPuzzle); // Return puzzle validity
     }
 
+    /**
+     * Read Sudoku Puzzle
+     * -----------------------
+     * Parses a text representation of a Sudoku puzzle into a 9x9 integer matrix.
+     * @param FileName File to read
+     * @return 9x9 integer matrix
+     */
     public static Integer[][] ReadSudokuPuzzle(String FileName){
         Integer[][] InitialBoardState = new Integer[9][9];
         Scanner SudokuFileScanner = OpenFile(FileName); // Open file for reading
+        // Read all lines of input
         String Line1 = SudokuFileScanner.nextLine();
         String Line2 = SudokuFileScanner.nextLine();
         String Line3 = SudokuFileScanner.nextLine();
@@ -82,6 +125,7 @@ public class SudokuSolver {
         String Line9 = SudokuFileScanner.nextLine();
         String Line10 = SudokuFileScanner.nextLine();
         String Line11 = SudokuFileScanner.nextLine();
+        // Read in input lines that have puzzle values to matrix
         InitialBoardState[0] = readLine(Line1);
         InitialBoardState[1] = readLine(Line2);
         InitialBoardState[2] = readLine(Line3);
@@ -94,6 +138,27 @@ public class SudokuSolver {
         return InitialBoardState;
     }
 
+    /**
+     * Convert Character
+     * -------------------
+     * Returns null if not a number
+     * @param myChar Evaluation target
+     * @return Integer value
+     */
+    public static Integer ConvertChar(char myChar) {
+        int myValue = Character.getNumericValue(myChar);
+        if(myValue == -1) return null;
+        return myValue;
+    }
+
+    /**
+     * Read Line
+     * -------------------------
+     * Read line of text based sudoku puzzle
+     * Hardcoded format is easier to maintain and alter IMO
+     * @param myLine Input line
+     * @return Array of all 9 values in a Sudoku puzzle row
+     */
     public static Integer[] readLine(String myLine) {
         Integer[] puzzleRow = new Integer[9];
         puzzleRow[0] = ConvertChar(myLine.charAt(0));
@@ -107,6 +172,14 @@ public class SudokuSolver {
         puzzleRow[8] = ConvertChar(myLine.charAt(10));
         return puzzleRow;
     }
+
+    /**
+     * Open File
+     * ----------------
+     * Basic file handling for scanning a text file
+     * @param filename File to Read
+     * @return Scanner Object init'd to file
+     */
     public static Scanner OpenFile(String filename) {
         File FileHandle = new File(filename);
         try {
@@ -119,8 +192,9 @@ public class SudokuSolver {
     }
 
     /**
-     * Fun for checking the mini grid algo
-     * @param Matrix
+     * Print
+     * Prints out Sudoku matrix
+     * @param Matrix Input matrix of integers
      */
     static void print(Integer[][] Matrix) {
         StringBuilder content = new StringBuilder();
@@ -131,8 +205,8 @@ public class SudokuSolver {
     }
 
     /**
-     * Fun for checking the mini grid algo
-     * @param Matrix
+     * Same as other print but overridden for different type of integer.
+     * @param Matrix Input matrix
      */
     static void print(int[][] Matrix) {
         StringBuilder content = new StringBuilder();
@@ -217,11 +291,15 @@ public class SudokuSolver {
 
         return valid;
     }
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
 
+    /**
+     * Get Max Value
+     * ------------------------------
+     * Used to check if algo is stuck
+     * Returns the largest value in a matrix
+     * @param my2dArray Input matrix
+     * @return Largest value
+     */
     public static int getMaxValue(int[][] my2dArray) {
         int out = 0;
         for(int[] array: my2dArray) {
@@ -232,14 +310,14 @@ public class SudokuSolver {
         return out;
     }
 
-    public static int countNonNullValues(Integer[][] myMatrix){
-        int out = 0;
-        for(Integer[] array: myMatrix) {
-            for(Integer val: array) {
-                if(val != null) out++;
-            }
-        }
-        return out;
+}
 
+/**
+ * Custom Exception for nice reading of main loop.
+ */
+class ImpossiblePuzzleException extends RuntimeException {
+    String Error;
+    public ImpossiblePuzzleException(String s) {
+        Error = s;
     }
 }
